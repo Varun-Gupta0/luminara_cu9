@@ -1,54 +1,70 @@
 :root{
-  --bg:#0f1724;
-  --card:#0b1220;
-  --accent:#22c55e;
-  --muted:#94a3b8;
-  --glass: rgba(255,255,255,0.03);
+  --bg: #f6f9fb;
+  --card: #ffffff;
+  --accent: #16a34a; /* green */
+  --muted: #6b7280;
+  --glass: rgba(2,6,23,0.03);
+  --text: #0f1724;
+  --card-border: #e6eef8;
 }
 
+/* Reset and base */
 *{box-sizing:border-box}
-html,body,#root{height:100%;margin:0;background:linear-gradient(180deg,#07102a 0%, #07223a 100%);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:#e6eef8}
+html,body,#root{height:100%;margin:0;background:linear-gradient(180deg,#fbfdff 0%, #f2f6f9 100%);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:var(--text)}
 
 .app{display:flex;flex-direction:column;min-height:100vh}
-.app-header{display:flex;align-items:center;padding:12px 16px;background:linear-gradient(90deg, rgba(255,255,255,0.02), transparent);}
+.app-header{display:flex;align-items:center;padding:12px 16px;background:transparent}
 .brand{display:flex;gap:12px;align-items:center}
-.logo{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#16a34a);display:flex;align-items:center;justify-content:center;font-size:22px}
+.logo{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#059669);display:flex;align-items:center;justify-content:center;font-size:22px;color:white}
 .title{font-weight:700;font-size:18px}
 
+/* Content */
 .content{flex:1;padding:20px;display:flex;flex-direction:column;gap:18px;max-width:1000px;margin:0 auto;width:100%}
 
-/* Hero */
-.hero{position:relative;border-radius:12px;padding:28px;background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));overflow:hidden;box-shadow:0 6px 20px rgba(2,6,23,0.6)}
-.hero .left{max-width:640px}
-.headline{font-size:28px;font-weight:800;line-height:1.05;margin-bottom:10px}
-.lead{color:var(--muted);margin-bottom:18px}
-.hero-cta{display:flex;gap:12px;margin-bottom:18px}
+/* Card */
+.card{background:var(--card);padding:14px;border-radius:10px;box-shadow:0 4px 10px rgba(15,23,36,0.06);color:var(--text);border:1px solid var(--card-border)}
+
+/* Hero tweaks kept minimal */
+
+/* Buttons */
 .btn{padding:10px 14px;border-radius:10px;cursor:pointer;border:0;font-weight:600}
-.btn-primary{background:linear-gradient(90deg,var(--accent),#16a34a);color:#042018}
-.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent)}
+.btn-primary{background:linear-gradient(90deg,var(--accent),#059669);color:white}
+.btn-ghost{background:transparent;border:1px solid rgba(15,23,36,0.06);color:var(--accent)}
 
-.features{display:flex;gap:12px;flex-wrap:wrap}
-.feature-card{background:var(--glass);padding:10px;border-radius:10px;min-width:140px;display:flex;flex-direction:column;gap:8px}
-
-/* Floating animated blobs */
-.blob{position:absolute;border-radius:50%;filter:blur(40px);opacity:0.18;mix-blend-mode:screen}
-.blob.one{width:300px;height:300px;right:-70px;top:-70px;background:linear-gradient(90deg,#22c55e,#06b6d4);animation:float1 8s ease-in-out infinite}
-.blob.two{width:200px;height:200px;left:-40px;bottom:-40px;background:linear-gradient(90deg,#06b6d4,#8b5cf6);animation:float2 7s ease-in-out infinite}
-@keyframes float1{0%{transform:translateY(0)}50%{transform:translateY(18px)}100%{transform:translateY(0)}}
-@keyframes float2{0%{transform:translateY(0)}50%{transform:translateY(-12px)}100%{transform:translateY(0)}}
-
-/* Cards */
-.card{background:var(--card);padding:14px;border-radius:10px;box-shadow:0 6px 14px rgba(2,6,23,0.6);color:#dbeafe}
-
-/* Bottom nav */
-.bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:14px;background:rgba(8,12,20,0.9);padding:8px 12px;border-radius:999px;display:flex;gap:6px;z-index:50;box-shadow:0 8px 24px rgba(2,6,23,0.6)}
+/* Bottom nav - light */
+.bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:14px;background:var(--card);padding:8px 12px;border-radius:999px;display:flex;gap:6px;z-index:50;box-shadow:0 8px 24px rgba(15,23,36,0.06)}
 .nav-item{display:flex;flex-direction:column;align-items:center;padding:8px 14px;border-radius:999px;color:var(--muted);cursor:pointer}
-.nav-item.active{background:linear-gradient(90deg,var(--accent),#16a34a);color:#022014;font-weight:700;box-shadow:0 8px 20px rgba(34,197,94,0.12)}
-.nav-item svg{width:20px;height:20px;margin-bottom:4px}
+.nav-item.active{background:linear-gradient(90deg,var(--accent),#16a34a);color:white;font-weight:700}
 
-/* Responsive */
+/* Chat window styles (light) */
+.chat-window{
+  max-height:320px;
+  overflow:auto;
+  padding:12px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.01), transparent);
+  border-radius:8px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  border:1px solid rgba(15,23,36,0.03);
+}
+.chat-row{display:flex;flex-direction:column;align-items:flex-start}
+.chat-row.chat-user{align-items:flex-end}
+.chat-bubble{
+  padding:10px 12px;
+  border-radius:12px;
+  max-width:80%;
+  background:#f3f4f6;
+  color:var(--text);
+  box-shadow:0 4px 10px rgba(15,23,36,0.04);
+}
+.chat-row.chat-user .chat-bubble{
+  background: linear-gradient(90deg,#ecfdf5,#bbf7d0);
+  color:#064e3b;
+}
+.chat-label{font-size:11px;color:var(--muted);margin-top:4px}
+
+/* responsive tweaks */
 @media(min-width:900px){
-  .bottom-nav{left:auto;right:20px;transform:none}
   .content{padding:40px}
-  .headline{font-size:36px}
 }
