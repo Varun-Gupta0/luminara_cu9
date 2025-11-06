@@ -17,16 +17,3 @@
     <script type="module" src="./src/main.jsx"></script>
   </body>
 </html>
-
-<pre>
-cd frontend
-npm install
-npm run dev  # Should start Vite on port 5173
-
-cd ../server
-npm install express cors
-node index.js  # Should start proxy on port 3001
-
-# In another terminal
-python -m uvicorn server.runner_service:app --host 127.0.0.1 --port 5001
-</pre>
