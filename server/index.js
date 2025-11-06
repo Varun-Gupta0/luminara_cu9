@@ -2,21 +2,52 @@
 // Run with Node 18+ (uses global fetch). Keep your API key in environment variables.
 
 import express from "express";
-import dotenv from "dotenv";
+import dotenv from "dotenv/lib/main";
+import { spawn } from "child_process";
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 
+// Simple request logger to help debug incoming requests and bodies
+app.use((req, res, next) => {
+  try {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} - body: ${JSON.stringify(req.body)}`);
+  } catch (e) {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  }
+  next();
+});
+
 // Basic CORS to allow local frontend access during development
 import cors from "cors";
-app.use(cors({
-  origin: true
-}));
+app.use(cors({ origin: true }));
 
 const PORT = process.env.PORT || 3001;
 
-app.get("/", (req, res) => res.send("Crop.Health proxy running"));
+app.get("/", (req, res) => res.send("Crop.Health / HuggingFace proxy running"));
+
+// Runner health check proxy
+app.get("/api/runner-health", async (req, res) => {
+  try {
+    const runnerUrl = process.env.RUNNER_URL || "http://127.0.0.1:5001/internal/health";
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
+    let r;
+    try {
+      r = await fetch(runnerUrl, { signal: controller.signal });
+    } catch (e) {
+      clearTimeout(timeout);
+      return res.status(502).json({ ok: false, error: String(e) });
+    }
+    clearTimeout(timeout);
+    if (!r.ok) return res.status(502).json({ ok: false, status: r.status });
+    const j = await r.json();
+    return res.json({ ok: true, runner: j });
+  } catch (err) {
+    return res.status(500).json({ ok: false, error: err.message });
+  }
+});
 
 // POST /api/chat
 // Body: { message: "..." }
@@ -26,38 +57,36 @@ app.post("/api/chat", async (req, res) => {
     const { message } = req.body;
     if (!message) return res.status(400).json({ error: "Missing message" });
 
-    const API_KEY = process.env.CROP_HEALTH_API_KEY;
-    if (!API_KEY) return res.status(500).json({ error: "Server missing API key" });
+    // Preferred: call persistent Python runner service at localhost:5001
+    const runnerUrl = process.env.RUNNER_URL || "http://127.0.0.1:5001/internal/chat";
 
-    // TODO: Replace the URL and body shape below with the exact crop.health endpoint and request fields.
-    // Example (assumes a POST to https://api.crop.health/v1/chat that accepts { prompt } and returns { reply }):
-    const apiUrl = "https://api.crop.health/v1/chat"; // <-- update per crop.health docs
+    // timeout using AbortController
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20_000);
 
-    const payloadForCropHealth = {
-      // adapt to crop.health docs. This is a common pattern:
-      prompt: message
-    };
-
-    const apiRes = await fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${API_KEY}`
-      },
-      body: JSON.stringify(payloadForCropHealth)
-    });
-
-    if (!apiRes.ok) {
-      const text = await apiRes.text();
-      return res.status(apiRes.status).json({ error: "Crop.Health API error", details: text });
+    let runnerRes;
+    try {
+      runnerRes = await fetch(runnerUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message }),
+        signal: controller.signal
+      });
+    } catch (fetchErr) {
+      clearTimeout(timeout);
+      console.error("Runner fetch failed:", fetchErr);
+      return res.status(502).json({ error: "Runner service unavailable", details: String(fetchErr) });
     }
 
-    const apiJson = await apiRes.json();
+    clearTimeout(timeout);
+    if (!runnerRes.ok) {
+      const text = await runnerRes.text();
+      console.error("Runner returned error:", text);
+      return res.status(502).json({ error: "Runner returned error", details: text });
+    }
 
-    // adapt this extraction to the actual shape returned by crop.health
-    const reply = apiJson.reply || apiJson.output?.text || apiJson.text || JSON.stringify(apiJson);
-
-    return res.json({ reply });
+    const json = await runnerRes.json();
+    return res.json({ reply: json.reply });
   } catch (err) {
     console.error("Proxy error:", err);
     return res.status(500).json({ error: err.message });
@@ -65,5 +94,5 @@ app.post("/api/chat", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Crop.Health proxy listening on http://localhost:${PORT}`);
+  console.log(`Proxy listening on http://localhost:${PORT}`);
 });
