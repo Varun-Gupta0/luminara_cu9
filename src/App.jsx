@@ -4,7 +4,7 @@ import WeatherCard from "./components/WeatherCard";
 import RentTools from "./components/RentTools";
 import ChatBot from "./components/ChatBot";
 import SellCrops from "./components/SellCrops";
-import BottomNav from "./components/BotttomNav";
+import BottomNav from "./components/BottomNav";
 
 export default function App() {
   const [page, setPage] = useState("hero"); // hero | weather | rent | chat | sell
