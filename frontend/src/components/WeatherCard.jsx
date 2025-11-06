@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 /*
   WeatherCard:
@@ -18,6 +18,10 @@ const MOCK = {
 function kelvinToC(k) { return Math.round(k - 273.15); }
 
 export default function WeatherCard() {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (ref.current) ref.current.classList.add("visible");
+  }, []);
   const [city, setCity] = useState("");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
@@ -49,7 +53,7 @@ export default function WeatherCard() {
   }
 
   return (
-    <section className="card">
+    <section className="card" ref={ref}>
       <h2 style={{marginTop:0}}>Weather</h2>
       <p style={{color:"var(--muted)"}}>Enter town/village to check current weather.</p>
 

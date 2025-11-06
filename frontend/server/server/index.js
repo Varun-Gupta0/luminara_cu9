@@ -2,7 +2,7 @@
 // Run with Node 18+ (uses global fetch). Keep your API key in environment variables.
 
 import express from "express";
-import dotenv from "./server/node_modules/dotenv/lib/main";
+import dotenv from "dotenv";
 import { spawn } from "child_process";
 dotenv.config();
 

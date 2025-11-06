@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 /*
   Frontend ChatBot that calls the backend proxy at /api/chat.
@@ -6,6 +6,8 @@ import React, { useState } from "react";
 */
 
 export default function ChatBot() {
+  const ref = useRef(null);
+  useEffect(() => { if (ref.current) ref.current.classList.add("visible"); }, []);
   const [messages, setMessages] = useState([
     { from: "bot", text: "Hello — I'm Farmigo assistant. Ask about pests, irrigation, or crop health." }
   ]);
@@ -29,13 +31,40 @@ export default function ChatBot() {
         body: JSON.stringify({ message: trimmed })
       });
 
-      const data = await res.json();
+      // Try to parse JSON, but handle empty or non-JSON responses gracefully
+      let data = null;
+      const contentType = res.headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
+        try {
+          data = await res.json();
+        } catch (e) {
+          // invalid JSON body
+          const text = await res.text();
+          const msg = text || "Empty response from server";
+          setMessages((m) => [...m, { from: "bot", text: `Error: ${msg}` }]);
+          setError(msg);
+          return;
+        }
+      } else {
+        // not JSON — try to read text
+        const text = await res.text();
+        if (!res.ok) {
+          const msg = text || `Server returned ${res.status}`;
+          setMessages((m) => [...m, { from: "bot", text: `Error: ${msg}` }]);
+          setError(msg);
+          return;
+        }
+        // successful non-JSON reply — treat as plain text reply
+        setMessages((m) => [...m, { from: "bot", text: text || "No response" }]);
+        return;
+      }
+
       if (!res.ok) {
         const msg = data?.error || "Unknown error from server";
         setMessages((m) => [...m, { from: "bot", text: `Error: ${msg}` }]);
         setError(msg);
       } else {
-        const reply = data.reply || "No response from crop.health";
+        const reply = data?.reply || "No response from server";
         setMessages((m) => [...m, { from: "bot", text: reply }]);
       }
     } catch (err) {
@@ -47,7 +76,7 @@ export default function ChatBot() {
   }
 
   return (
-    <section className="card" aria-label="AI Chat">
+    <section className="card" aria-label="AI Chat" ref={ref}>
       <h2 style={{ marginTop: 0 }}>AI Assistant</h2>
       <p style={{ color: "var(--muted)" }}>Ask about crop care, pests, irrigation and more.</p>
 

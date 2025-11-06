@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 /*
   SellCrops:
@@ -7,6 +7,8 @@ import React, { useEffect, useState } from "react";
 */
 
 export default function SellCrops() {
+  const ref = useRef(null);
+  useEffect(() => { if (ref.current) ref.current.classList.add("visible"); }, []);
   const [listings, setListings] = useState([]);
   const [form, setForm] = useState({ crop: "", quantity: "", price: "" });
 
@@ -33,7 +35,7 @@ export default function SellCrops() {
   }
 
   return (
-    <section className="card">
+    <section className="card" ref={ref}>
       <h2 style={{marginTop:0}}>Sell Crops</h2>
       <p style={{color:"var(--muted)"}}>Create a listing to sell crops. Buyers can contact you (contact flow to add).</p>
 

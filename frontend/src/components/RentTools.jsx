@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 /*
   Simple Rent Tools module:
@@ -15,6 +15,8 @@ const TOOLS = [
 ];
 
 export default function RentTools() {
+  const ref = useRef(null);
+  useEffect(() => { if (ref.current) ref.current.classList.add("visible"); }, []);
   const [requests, setRequests] = useState([]);
   const [selected, setSelected] = useState(null);
   const [days, setDays] = useState(1);
@@ -42,7 +44,7 @@ export default function RentTools() {
   }
 
   return (
-    <section className="card">
+    <section className="card" ref={ref}>
       <h2 style={{marginTop:0}}>Rent Tools</h2>
       <p style={{color:"var(--muted)"}}>Choose a tool and submit a rent request.</p>
 
