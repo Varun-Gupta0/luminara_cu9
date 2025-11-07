@@ -65,7 +65,15 @@ export default function Hero({ onNavigate = () => {} }) {
               <div className="icon">🛒</div>
               <div>
                 <div className="f-title">Marketplace</div>
-                <div className="f-sub">Buy & sell produce</div>
+                <div className="f-sub">Sell fertilizers & pesticides</div>
+              </div>
+            </div>
+
+            <div className="feature">
+              <div className="icon">👥</div>
+              <div>
+                <div className="f-title">Community</div>
+                <div className="f-sub">Share disease solutions nearby</div>
               </div>
             </div>
           </div>

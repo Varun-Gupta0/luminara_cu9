@@ -3,11 +3,11 @@ import React, { useState, FormEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
-interface LoginResponse {
-  token: string;
+interface LoginProps {
+  onLogin?: () => void;
 }
 
-const Login: React.FC = () => {
+const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -26,8 +26,9 @@ const Login: React.FC = () => {
     }
 
     try {
-      const response = await axios.post<LoginResponse>('/api/auth/login', { email, password });
+      const response = await axios.post('http://localhost:4000/api/auth/login', { email, password });
       localStorage.setItem('token', response.data.token);
+      onLogin?.();
       navigate('/dashboard');
     } catch (error: any) {
       setError(error.response?.data?.message || 'Login failed');

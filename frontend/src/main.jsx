@@ -1,6 +1,8 @@
 import "./styles.css";  // Import styles first
+import "./styles/global.css"; // <-- ADD THIS LINE
 import React from "react";
 import { createRoot } from "react-dom/client";
+import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
 import ErrorBoundary from "./components/ErrorBoundary";
 
@@ -16,9 +18,11 @@ if (!rootEl) {
   const root = createRoot(rootEl);
   root.render(
     <React.StrictMode>
-      <ErrorBoundary>
-        <App />
-      </ErrorBoundary>
+      <Router>
+        <ErrorBoundary>
+          <App />
+        </ErrorBoundary>
+      </Router>
     </React.StrictMode>
   );
 }

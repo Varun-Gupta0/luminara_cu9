@@ -5,7 +5,8 @@ const items = [
   { key: "weather", label: "Weather", icon: (<svg viewBox="0 0 24 24"><path d="M6 14a6 6 0 1 1 5.9 7H6a4 4 0 0 1 0-8h.1" fill="currentColor"/></svg>) },
   { key: "rent", label: "Rent", icon: (<svg viewBox="0 0 24 24"><path d="M3 7h18v10H3z" fill="currentColor"/></svg>) },
   { key: "chat", label: "Chat", icon: (<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" fill="currentColor"/></svg>) },
-  { key: "sell", label: "Sell", icon: (<svg viewBox="0 0 24 24"><path d="M12 2l3 5 5 1-4 4 1 5-5-3-5 3 1-5-4-4 5-1 3-5z" fill="currentColor"/></svg>) }
+  { key: "sell", label: "Sell", icon: (<svg viewBox="0 0 24 24"><path d="M12 2l3 5 5 1-4 4 1 5-5-3-5 3 1-5-4-4 5-1 3-5z" fill="currentColor"/></svg>) },
+  { key: "community", label: "Community", icon: (<svg viewBox="0 0 24 24"><path d="M16 4H8a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z" fill="currentColor"/></svg>) }
 ];
 
 export default function BottomNav({ active, onChange }) {

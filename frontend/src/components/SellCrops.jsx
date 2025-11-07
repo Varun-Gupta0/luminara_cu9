@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 
 /*
-  SellCrops:
+  SellFertilizers:
   - Basic listing form saved to localStorage for demo.
   - Replace with API endpoints for production and image upload.
 */
@@ -10,7 +10,7 @@ export default function SellCrops() {
   const ref = useRef(null);
   useEffect(() => { if (ref.current) ref.current.classList.add("visible"); }, []);
   const [listings, setListings] = useState([]);
-  const [form, setForm] = useState({ crop: "", quantity: "", price: "" });
+  const [form, setForm] = useState({ item: "", quantity: "", price: "" });
 
   useEffect(() => {
     const raw = localStorage.getItem("farmigo_sell_listings");
@@ -19,7 +19,7 @@ export default function SellCrops() {
 
   function submit(e) {
     e.preventDefault();
-    if (!form.crop || !form.quantity || !form.price) {
+    if (!form.item || !form.quantity || !form.price) {
       alert("Fill all fields");
       return;
     }
@@ -31,27 +31,27 @@ export default function SellCrops() {
     const updated = [item, ...listings];
     setListings(updated);
     localStorage.setItem("farmigo_sell_listings", JSON.stringify(updated));
-    setForm({ crop: "", quantity: "", price: "" });
+    setForm({ item: "", quantity: "", price: "" });
   }
 
   return (
     <section className="card" ref={ref}>
-      <h2 style={{marginTop:0}}>Sell Crops</h2>
-      <p style={{color:"var(--muted)"}}>Create a listing to sell crops. Buyers can contact you (contact flow to add).</p>
+      <h2 style={{marginTop:0}}>Sell Fertilizers & Pesticides</h2>
+      <p style={{color:"var(--muted)"}}>Create a listing to sell used fertilizers or pesticides. Buyers can contact you (contact flow to add).</p>
 
       <form onSubmit={submit} style={{display:"grid",gap:8,marginTop:12}}>
-        <input placeholder="Crop (e.g., Maize)"
-          value={form.crop} onChange={(e)=>setForm({...form,crop:e.target.value})}
+        <input placeholder="Item (e.g., Urea Fertilizer)"
+          value={form.item} onChange={(e)=>setForm({...form,item:e.target.value})}
           style={{padding:10,borderRadius:8}} />
-        <input placeholder="Quantity (e.g., 100 kg)"
+        <input placeholder="Quantity (e.g., 50 kg)"
           value={form.quantity} onChange={(e)=>setForm({...form,quantity:e.target.value})}
           style={{padding:10,borderRadius:8}} />
-        <input placeholder="Price (e.g., 300 USD per 100 kg)"
+        <input placeholder="Price (e.g., 200 USD per 50 kg)"
           value={form.price} onChange={(e)=>setForm({...form,price:e.target.value})}
           style={{padding:10,borderRadius:8}} />
         <div style={{display:"flex",gap:8}}>
           <button className="btn btn-primary" type="submit">Create listing</button>
-          <button className="btn btn-ghost" type="button" onClick={()=>setForm({crop:"",quantity:"",price:""})}>Reset</button>
+          <button className="btn btn-ghost" type="button" onClick={()=>setForm({item:"",quantity:"",price:""})}>Reset</button>
         </div>
       </form>
 
@@ -62,7 +62,7 @@ export default function SellCrops() {
           <div key={l.id} style={{padding:10,background:"rgba(255,255,255,0.02)",borderRadius:8,marginBottom:8}}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
               <div>
-                <div style={{fontWeight:700}}>{l.crop}</div>
+                <div style={{fontWeight:700}}>{l.item}</div>
                 <div style={{color:"var(--muted)",fontSize:13}}>{l.quantity} • {l.price}</div>
               </div>
               <div style={{fontSize:12,color:"var(--muted)"}}>{new Date(l.createdAt).toLocaleDateString()}</div>

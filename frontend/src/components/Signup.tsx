@@ -29,8 +29,9 @@ const Signup: React.FC = () => {
     }
 
     try {
-      await axios.post('/api/auth/signup', { name, email, password });
-      navigate('/login');
+      const response = await axios.post('http://localhost:4000/api/auth/register', { name, email, password });
+      localStorage.setItem('token', response.data.token);
+      navigate('/dashboard');
     } catch (error: any) {
       setError(error.response?.data?.message || 'Signup failed');
     } finally {

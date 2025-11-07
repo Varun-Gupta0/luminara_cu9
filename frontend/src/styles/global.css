@@ -1,0 +1,48 @@
+/* src/styles/global.css */
+
+/* --- Import a clean, modern font --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+/* --- CSS Variables (Color Palette) --- */
+:root {
+  --primary-green: #22c55e; /* A bright, modern green */
+  --primary-dark: #16a34a;
+  --dark-bg: #111827;      /* For dark sections */
+  --light-bg: #f9fafb;     /* For light sections */
+  --text-dark: #1f2937;
+  --text-light: #6b7280;
+  --border-color: #e5e7eb;
+  --white: #ffffff;
+}
+
+/* --- Global Reset & Base Styles --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--white);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h1 { font-size: 3rem; }
+h2 { font-size: 2.25rem; }
+h3 { font-size: 1.25rem; }
+
+p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+a, button {
+  font-family: 'Inter', sans-serif;
+}

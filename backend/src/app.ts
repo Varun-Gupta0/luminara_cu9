@@ -1,15 +1,18 @@
 import express from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
-import farmerRoutes from './routes/farmerRoutes';
+import weatherRoutes from './routes/weather';
+import authRoutes from './routes/auth';
 
 const app = express();
 
-app.use(helmet());
-app.use(cors());
 app.use(express.json());
 
-app.use('/api/farmers', farmerRoutes);
+// Enable CORS
+app.use(cors());
+
+// Register routes
+app.use('/api/weather', weatherRoutes);
+app.use('/api/auth', authRoutes);
 
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }));
 
