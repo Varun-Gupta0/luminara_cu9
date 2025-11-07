@@ -12,10 +12,11 @@
   grid-template-columns: 1fr 1fr;
   gap: 60px;
   align-items: center;
+  background:radial-gradient(circle,pink,blue)
 }
 
 .hero-content {
-  padding-left: 20px;
+  padding-left: 200px;
 }
 
 .hero-title {
