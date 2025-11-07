@@ -1,7 +1,8 @@
-# TODO: Change Text Colors - Only "Welcome to Farmigo" in Lilac with Black Text Shadow, Others in #28282B with 0.9 Opacity
-
-- [x] Update .heroTitle color in Homepage.module.css for "Welcome to Farmigo" to lilac with black text shadow and 0.9 opacity
-- [x] Update .heroSubtitle color in Homepage.module.css for "Empowering farmers..." subtitle to #28282B with 0.9 opacity
-- [x] Update .feature color in Homepage.module.css for feature texts (Weather Forecasting, Tool Rentals, etc.) to #28282B with 0.9 opacity
-- [x] Verify changes by running the frontend app at http://localhost:5173/
-      add
+- [ ] Update CommunityThreads.jsx to include a select dropdown for choosing Indian districts
+- [ ] Hardcode a comprehensive list of Indian districts (grouped by state for organization)
+- [ ] Add state for selectedLocation, default to empty
+- [ ] Update form to include location select
+- [ ] Modify thread posting to use selected location
+- [ ] Update localStorage to store threads keyed by district (e.g., farmigo_community_threads_Delhi)
+- [ ] Update filtering to show threads only from selected district
+- [ ] Test the component to ensure location selection and storage work correctly

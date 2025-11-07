@@ -111,6 +111,7 @@
   background-color: var(--light-bg) ;
   opacity: 0.8;
   border: none; /* Removed invalid declaration */
+  border-radius: 20px;
 }
 
 .loginContainer {
