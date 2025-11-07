@@ -1,8 +1,8 @@
-- [ ] Update CommunityThreads.jsx to include a select dropdown for choosing Indian districts
-- [ ] Hardcode a comprehensive list of Indian districts (grouped by state for organization)
-- [ ] Add state for selectedLocation, default to empty
-- [ ] Update form to include location select
-- [ ] Modify thread posting to use selected location
-- [ ] Update localStorage to store threads keyed by district (e.g., farmigo_community_threads_Delhi)
-- [ ] Update filtering to show threads only from selected district
-- [ ] Test the component to ensure location selection and storage work correctly
+- [x] Update CommunityThreads.jsx to include a select dropdown for choosing Indian districts
+- [x] Hardcode a comprehensive list of Indian districts (grouped by state for organization)
+- [x] Add state for selectedLocation, default to empty
+- [x] Update form to include location select
+- [x] Modify thread posting to use selected location
+- [x] Update localStorage to store threads keyed by district (e.g., farmigo_community_threads_Delhi)
+- [x] Update filtering to show threads only from selected district
+- [x] Test the component to ensure location selection and storage work correctly

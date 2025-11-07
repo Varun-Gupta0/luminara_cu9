@@ -83,11 +83,11 @@ export default function Hero({ onNavigate = () => {} }) {
           <div className="panel-visual">
             <div className="stat">
               <div className="stat-value">24°C</div>
-              <div className="stat-label">Nairobi — Clear</div>
+              <div className="stat-label">Raipur — Clear</div>
             </div>
 
             <div className="panel-cards">
-              <div className="small-card">Rent: Rotary Tiller • $30/day</div>
+              <div className="small-card">Rent: Rotary Tiller • ₹300/hr</div>
               <div className="small-card">Buyer request: 200kg maize nearby</div>
             </div>
 

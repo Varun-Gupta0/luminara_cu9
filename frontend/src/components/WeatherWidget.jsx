@@ -116,7 +116,7 @@ const WeatherWidget = () => {
 
                 <div style={{ textAlign: 'right' }}>
                   <div style={{ ...smallText }}>Sunrise</div>
-                  <div style={{ color: '#ddd' }}>{data.sunrise ?? '—'}</div>
+                  <div style={{ color: '#c32020ff' }}>{data.sunrise ?? '—'}</div>
                   <div style={{ height: 6 }} />
                   <div style={{ ...smallText }}>Sunset</div>
                   <div style={{ color: '#ddd' }}>{data.sunset ?? '—'}</div>
